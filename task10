@@ -1,0 +1,61 @@
+venue = float(input("Enter venue cost: "))
+equipment = float(input("Enter equipment cost: "))
+catering = float(input("Enter catering cost per participant: "))
+transport = float(input("Enter transport cost: "))
+certificate = float(input("Enter certificate cost per participant: "))
+
+participants = int(input("Enter expected number of participants: "))
+sponsorship = float(input("Enter sponsorship amount: "))
+contribution = float(input("Enter contribution per participant: "))
+
+if venue < 0 or equipment < 0 or catering < 0 or transport < 0 or certificate < 0 or participants <= 0 or sponsorship < 0 or contribution < 0:
+    print("Invalid event details")
+
+else:
+    fixed_cost = venue + equipment + transport
+    variable_cost = (catering + certificate) * participants
+
+    total_cost = fixed_cost + variable_cost
+
+    total_contribution = participants * contribution
+
+    total_funds = total_contribution + sponsorship
+
+    shortfall = total_cost - total_funds
+
+    if contribution > catering + certificate:
+        break_even = fixed_cost / (contribution - catering - certificate)
+        break_even = int(break_even)
+        if fixed_cost % (contribution - catering - certificate) != 0:
+            break_even = break_even + 1
+    else:
+        break_even = -1
+
+    print("\n------ CAMPUS EVENT REPORT ------")
+    print("Venue Cost:", venue)
+    print("Equipment Cost:", equipment)
+    print("Catering Cost:", catering * participants)
+    print("Transport Cost:", transport)
+    print("Certificate Cost:", certificate * participants)
+    print("Total Event Cost:", total_cost)
+    print("Participant Contribution:", total_contribution)
+    print("Sponsorship Amount:", sponsorship)
+    print("Total Available Funds:", total_funds)
+
+    if shortfall > 0:
+        print("Sponsorship/Financial Shortfall:", shortfall)
+    else:
+        print("Financial Status: Sufficient Funds")
+        print("Remaining Amount:", abs(shortfall))
+
+    if break_even == -1:
+        print("Break-even cannot be achieved with the current contribution.")
+    else:
+        print("Minimum Participants Needed:", break_even)
+
+    if total_funds >= total_cost:
+        print("Event Status: Financially Successful")
+    else:
+        print("Event Status: Additional Funds Required")
+
+    print("---------------------------------")
